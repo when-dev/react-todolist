@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import TodoList from './TodoList';
 import TodoAdd from './TodoAdd';
+import TodoDetail from './TodoDetail';
 
 const date1 = new Date(2021, 7, 19, 14, 5);
 const date2 = new Date(2021, 7, 19, 15, 23);
@@ -34,6 +35,7 @@ export default class App extends Component {
     this.delete = this.delete.bind(this);
     this.add = this.add.bind(this);
     this.showMenu = this.showMenu.bind(this);
+    this.getDeed = this.getDeed.bind(this);
   }
 
   setDone(key) {
@@ -59,6 +61,11 @@ export default class App extends Component {
   showMenu(evt) {
     evt.preventDefault();
     this.setState((state) => ({ showMenu: !state.showMenu }));
+  }
+
+  getDeed(key) {
+    key = +key;
+    return this.state.data.find((current) => current.key === key);
   }
 
   render() {
@@ -108,6 +115,9 @@ export default class App extends Component {
                 add={this.add}
               />}
             />
+            <Route path="/:key" element={
+              <TodoDetail getDeed={this.getDeed} />
+            } />
           </Routes>
         </main>
       </div>
