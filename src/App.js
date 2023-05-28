@@ -6,6 +6,8 @@ import TodoDetail from './TodoDetail';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Register from "./Register";
 import firebaseApp from './firebase';
+import Logout from "./Logout";
+import Login from "./Login";
 
 
 
@@ -107,12 +109,20 @@ export default class App extends Component {
           </div>
           <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'} onClick={this.showMenu}>
             <div className="navbar-start">
-              {this.state.currentUser && (
+              {this.state.currentUser &&
                 <NavLink to="/add" className={({ isActive }) =>
                   'navbar-item' + (isActive ? ' is-active' : " ")
                 }
                 >
                   Создать дело
+                </NavLink>
+              }
+              {!this.state.currentUser && (
+                <NavLink to="/login" className={({ isActive }) =>
+                  'navbar-item' + (isActive ? ' is-active' : '')
+                } 
+                >
+                  Войти
                 </NavLink>
               )}
               {!this.state.currentUser && (
@@ -124,6 +134,16 @@ export default class App extends Component {
                 </NavLink>
               )}
             </div>
+            {this.state.currentUser && (
+              <div className="navbar-end">
+                <NavLink to="/logout" className={({ isActive }) => 
+                  'navbar-item' + (isActive ? ' is-active' : '')
+                }
+                >
+                  Выйти
+                </NavLink>
+              </div>
+            )}
           </div>
 
         </nav>
@@ -146,6 +166,12 @@ export default class App extends Component {
             } />
             <Route path="/register" element={
               <Register currentUser={this.state.currentUser} />
+            } />
+            <Route path="logout" element={
+              <Logout currentUser={this.state.currentUser} />
+            } />
+            <Route path="login" element={
+              <Login currentUser={this.state.currentUser} />
             } />
           </Routes>
         </main>
