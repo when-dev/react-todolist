@@ -140,6 +140,7 @@ export default class App extends Component {
                 list={this.state.data}
                 setDone={this.setDone}
                 delete={this.delete}
+                currentUser={this.state.currentUser}
               />}
             />
             <Route path="/add" element={
@@ -149,8 +150,11 @@ export default class App extends Component {
               />}
             />
             <Route path="/:key" element={
-              <TodoDetail getDeed={this.getDeed} />
-            } />
+              <TodoDetail 
+                getDeed={this.getDeed} 
+                currentUser={this.state.currentUser}
+              />} 
+            />
             <Route path="/register" element={
               <Register currentUser={this.state.currentUser} />
             } />
