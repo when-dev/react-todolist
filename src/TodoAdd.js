@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
-
+import { add } from "./auth";
 
 export default class TodoAdd extends Component {
   constructor(props) {
@@ -43,14 +43,14 @@ export default class TodoAdd extends Component {
     }
   }
 
-  handleFormSubmit(evt) {
+  async handleFormSubmit(evt) {
     evt.preventDefault();
     const newDeed = { ...this.formData };
     const date = new Date();
     newDeed.done = false;
     newDeed.createdAt = date.toLocaleString();
-    newDeed.key = date.getTime();
-    this.props.add(newDeed);
+    const addedDeed = await add(this.props.currentUser, newDeed);
+    this.props.add(addedDeed);
     this.setState((state) => ({ redirect: true }));
   }
 
